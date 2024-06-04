@@ -1,15 +1,20 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <title> Name Generator </title>
-  
+    <title>Run Python Script</title>
 </head>
-
-  
 <body>
- <h1>Run Python Script</h1>
-    <form action="/run-script" method="post">
+    <h1>Run Python Script</h1>
+    <form id="script-form">
         <button type="submit">Run Script</button>
     </form>
-</body> 
+    <script>
+        document.getElementById('script-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const response = await fetch('/.netlify/functions/python/handler', { method: 'POST' });
+            const result = await response.json();
+            alert(result.message);
+        });
+    </script>
+</body>
 </html>
