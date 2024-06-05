@@ -17,7 +17,7 @@ def handler(event, context):
     try:
         # Execute the script and capture its output
         script_output = subprocess.check_output(["python3", "functions/python/script.py"], text=True)
-
+        
         # Optionally, you can still upload the file to S3
         s3.put_object(Bucket=bucket_name, Key=file_name, Body=script_output)
 
@@ -34,4 +34,9 @@ def handler(event, context):
         return {
             "statusCode": 500,
             "body": json.dumps({"message": "Script execution failed", "output": e.output})
+        }
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "body": json.dumps({"message": str(e)})
         }
